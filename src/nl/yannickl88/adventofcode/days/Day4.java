@@ -21,6 +21,10 @@ public class Day4 {
             return start <= other.start && end >= other.end;
         }
 
+        public boolean partlyOverlaps(Section other) {
+            return end >= other.start && start <= other.end;
+        }
+
         public void print(int size) {
             StringBuilder row = new StringBuilder();
 
@@ -58,11 +62,11 @@ public class Day4 {
             Section firstSection = new Section(pair[0]);
             Section secondSection = new Section(pair[1]);
 
-            if (firstSection.fullyOverlaps(secondSection) || secondSection.fullyOverlaps(firstSection)) {
+            if (firstSection.partlyOverlaps(secondSection) || secondSection.partlyOverlaps(firstSection)) {
                 overlappingSections++;
             }
         }
 
-        System.out.printf("%d pairs fully contain the other.\n", overlappingSections);
+        System.out.printf("%d pairs partly contain the other.\n", overlappingSections);
     }
 }

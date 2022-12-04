@@ -20,11 +20,11 @@ public class Day3 {
         int totalScore = 0;
 
         while (backpacks.hasNextLine()) {
-            String backpackContents = backpacks.nextLine();
-            String contentsFirstCompartment = backpackContents.substring(0, backpackContents.length() / 2);
-            String contentsSecondCompartment = backpackContents.substring(backpackContents.length() / 2);
+            String backpack1Contents = backpacks.nextLine();
+            String backpack2Contents = backpacks.nextLine();
+            String backpack3Contents = backpacks.nextLine();
 
-            String commonItem = this.findCommonItem(contentsFirstCompartment, contentsSecondCompartment);
+            String commonItem = this.findCommonItem(backpack1Contents, backpack2Contents, backpack3Contents);
             int score = this.priority(commonItem);
 
             System.out.printf("Common item is %s, with a score of %d.\n", commonItem, score);
@@ -40,12 +40,14 @@ public class Day3 {
         return PRIORITY_ORDER.indexOf(letter) + 1;
     }
 
-    private String findCommonItem(String contentsFirstCompartment, String contentsSecondCompartment) {
-        HashSet<String> itemsFirstCompartment = new HashSet<>(List.of(contentsFirstCompartment.split("")));
-        HashSet<String> itemsSecondCompartment = new HashSet<>(List.of(contentsSecondCompartment.split("")));
+    private String findCommonItem(String backpack1Contents, String backpack2Contents, String backpack3Contents) {
+        HashSet<String> itemsBackpack1 = new HashSet<>(List.of(backpack1Contents.split("")));
+        HashSet<String> itemsBackpack2 = new HashSet<>(List.of(backpack2Contents.split("")));
+        HashSet<String> itemsBackpack3 = new HashSet<>(List.of(backpack3Contents.split("")));
 
-        Set<String> intersection = new HashSet<String>(itemsFirstCompartment);
-        intersection.retainAll(itemsSecondCompartment);
+        Set<String> intersection = new HashSet<>(itemsBackpack1);
+        intersection.retainAll(itemsBackpack2);
+        intersection.retainAll(itemsBackpack3);
 
         return intersection.stream().findFirst().get();
     }

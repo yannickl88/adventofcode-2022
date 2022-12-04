@@ -26,22 +26,32 @@ public class Day2 {
         }
     }
     private enum PlayerChoice {
-        ROCK("X", 1),
-        PAPER("Y", 2),
-        SCISSORS("Z", 3);
+        ROCK(1),
+        PAPER( 2),
+        SCISSORS(3);
 
-        public final String choice;
         public final int value;
 
-        PlayerChoice(String choice, int value) {
-            this.choice = choice;
+        PlayerChoice(int value) {
             this.value = value;
         }
+    }
 
-        public static PlayerChoice fromString(String text) {
-            for (PlayerChoice c : PlayerChoice.values()) {
-                if (c.choice.equals(text)) {
-                    return c;
+    private enum Outcome {
+        LOSE("X"),
+        DRAW("Y"),
+        WIN("Z");
+
+        public final String choice;
+
+        Outcome(String choice) {
+            this.choice = choice;
+        }
+
+        public static Outcome fromString(String text) {
+            for (Outcome o : Outcome.values()) {
+                if (o.choice.equals(text)) {
+                    return o;
                 }
             }
             throw new RuntimeException();
@@ -63,7 +73,9 @@ public class Day2 {
         while (rounds.hasNextLine()) {
             String[] line = rounds.nextLine().split(" ");
             OpponentChoice opponentChoice = OpponentChoice.fromString(line[0]);
-            PlayerChoice playerChoice = PlayerChoice.fromString(line[1]);
+            Outcome outcome = Outcome.fromString(line[1]);
+
+            PlayerChoice playerChoice = this.select(opponentChoice, outcome);
 
             int score = playerChoice.value + this.score(opponentChoice, playerChoice);
 
@@ -75,6 +87,29 @@ public class Day2 {
 
         System.out.println("---------");
         System.out.printf("Your total score was %d\n", totalScore);
+    }
+
+    private PlayerChoice select(OpponentChoice opponentChoice, Outcome outcome) {
+        if (outcome == Outcome.WIN) {
+            return switch (opponentChoice) {
+                case PAPER -> PlayerChoice.SCISSORS;
+                case ROCK -> PlayerChoice.PAPER;
+                case SCISSORS -> PlayerChoice.ROCK;
+            };
+        }
+        if (outcome == Outcome.LOSE) {
+            return switch (opponentChoice) {
+                case PAPER -> PlayerChoice.ROCK;
+                case ROCK -> PlayerChoice.SCISSORS;
+                case SCISSORS -> PlayerChoice.PAPER;
+            };
+        }
+
+        return switch (opponentChoice) {
+            case PAPER -> PlayerChoice.PAPER;
+            case ROCK -> PlayerChoice.ROCK;
+            case SCISSORS -> PlayerChoice.SCISSORS;
+        };
     }
 
     private int score(OpponentChoice opponentChoice, PlayerChoice playerChoice) {

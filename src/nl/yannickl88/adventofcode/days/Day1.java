@@ -2,27 +2,34 @@ package nl.yannickl88.adventofcode.days;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
-public class Day1  {
+public class Day1 {
+    private static final int TOTAL = 3;
+    static class Elf {
+        public final int index;
+        public final int calories;
+
+        Elf(int index, int calories) {
+
+            this.index = index;
+            this.calories = calories;
+        }
+    }
+
     public Day1(File input) throws FileNotFoundException {
+        PriorityQueue<Elf> queue = new PriorityQueue<>((o1, o2) -> Integer.compare(o2.calories, o1.calories));
         int currentElf = 1;
         int currentCaloricCount = 0;
-        int highestCaloricCarryingElf = -1;
-        int highestCaloricCount = 0;
 
         Scanner elfs = new Scanner(input);
 
-        while(elfs.hasNextLine()) {
+        while (elfs.hasNextLine()) {
             String line = elfs.nextLine();
 
             if (line.trim().length() == 0) {
-                if (currentCaloricCount > highestCaloricCount) {
-                    highestCaloricCarryingElf = currentElf;
-                    highestCaloricCount = currentCaloricCount;
-                }
-
-                System.out.printf("Elf %d carries %d callories\n", currentElf, currentCaloricCount);
+                queue.add(new Elf(currentElf, currentCaloricCount));
 
                 currentElf++;
                 currentCaloricCount = 0;
@@ -31,13 +38,19 @@ public class Day1  {
             }
         }
 
-        if (currentCaloricCount > highestCaloricCount) {
-            highestCaloricCarryingElf = currentElf;
-            highestCaloricCount = currentCaloricCount;
+        queue.add(new Elf(currentElf, currentCaloricCount));
+
+        int totalByTop3 = 0;
+
+        for (int i = 0; i < TOTAL; i++) {
+            Elf e = queue.remove();
+            System.out.printf("Elf %d is carrying the most carries, which is %d callories\n", e.index, e.calories);
+
+            totalByTop3 += e.calories;
         }
 
-        System.out.printf("Elf %d carries %d callories\n", currentElf, currentCaloricCount);
-        System.out.println("------------");
-        System.out.printf("Elf %d is carrying the most carries, which is %d callories\n", highestCaloricCarryingElf, highestCaloricCount);
+        System.out.println("---------");
+        System.out.printf("Total by all 3 is %d callories\n", totalByTop3);
+
     }
 }

@@ -18,12 +18,19 @@ public class Day1 {
         }
     }
 
-    public Day1(File input) throws FileNotFoundException {
+    public Day1() {
+        File input = new File("inputs/day1/test.txt");
+
         PriorityQueue<Elf> queue = new PriorityQueue<>((o1, o2) -> Integer.compare(o2.calories, o1.calories));
         int currentElf = 1;
         int currentCaloricCount = 0;
 
-        Scanner elfs = new Scanner(input);
+        Scanner elfs;
+        try {
+            elfs = new Scanner(input);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
         while (elfs.hasNextLine()) {
             String line = elfs.nextLine();

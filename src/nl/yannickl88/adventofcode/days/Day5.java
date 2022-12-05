@@ -61,11 +61,15 @@ public class Day5 {
                     ArrayList<String> fromCrate = crates.get(from - 1);
                     ArrayList<String> toCrate = crates.get(to - 1);
 
+                    ArrayList<String> chunk = new ArrayList<>();
+
                     while (amount > 0) {
-                        toCrate.add(fromCrate.remove(fromCrate.size() - 1));
+                        chunk.add(0, fromCrate.remove(fromCrate.size() - 1));
 
                         amount--;
                     }
+
+                    toCrate.addAll(chunk);
                 }
             }
         }

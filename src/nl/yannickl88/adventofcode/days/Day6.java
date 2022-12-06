@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Day6 {
+    private static final int MESSAGE_SIZE = 14;
+
     public Day6() {
         File input = new File("inputs/day6/input.txt");
         Scanner stream;
@@ -23,9 +25,9 @@ public class Day6 {
             String c = stream.next();
             charsScanned++;
 
-            window = window.substring(Math.max(0, window.length() - 3)) + c;
+            window = window.substring(Math.max(0, window.length() - (MESSAGE_SIZE - 1))) + c;
 
-            if (window.length() ==4 && !containsDuplicateChars(window)) {
+            if (window.length() == MESSAGE_SIZE && !containsDuplicateChars(window)) {
                 System.out.printf("first marker after character %d\n", charsScanned);
                 return;
             }

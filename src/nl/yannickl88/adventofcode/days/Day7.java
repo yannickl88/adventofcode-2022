@@ -52,19 +52,19 @@ public class Day7 {
             return total;
         }
 
-        public void collectFolders(ArrayList<Integer> result) {
+        public void collectFolders(ArrayList<Integer> result, int totalSize) {
             if (!this.isFolder) {
                 return;
             }
 
             int mySize = this.totalSize();
 
-            if (mySize < 100000) {
+            if (mySize >= totalSize) {
                 result.add(mySize);
             }
 
             for (FileNode n : this.children) {
-                n.collectFolders(result);
+                n.collectFolders(result, totalSize);
             }
         }
     }
@@ -110,13 +110,20 @@ public class Day7 {
             }
         }
 
+        int totalSize = root.totalSize();
+
         ArrayList<Integer> result = new ArrayList<>();
-        root.collectFolders(result);
+        System.out.printf("Total size of all file is %d\n", totalSize);
+
+        int toFreeUp = 30000000 - (70000000 - totalSize);
+        System.out.printf("We need to remove a folder of at least %d to clear up enough space\n", toFreeUp);
+
+        root.collectFolders(result, toFreeUp);
 
         System.out.println(result);
 
-        int total = result.stream().reduce(0, Integer::sum);
+        int total = result.stream().reduce(root.totalSize(), Integer::min);
 
-        System.out.printf("The sum of the total sizes is %d\n", total);
+        System.out.printf("Smallest folder size we can remove is %d\n", total);
     }
 }

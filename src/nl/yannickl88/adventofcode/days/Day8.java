@@ -3,6 +3,7 @@ package nl.yannickl88.adventofcode.days;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,92 +31,62 @@ public class Day8 {
             this.size = size;
         }
 
-        List<Tree> getVisibleTrees() {
-            ArrayList<Tree> visible = new ArrayList<>();
+        int getHighestScenicScore() {
+            int highestScore = 0;
 
             for (int y = 0; y < size; y++) {
                 for (int x = 0; x < size; x++) {
-                    if (isVisible(x, y)) {
-                        visible.add(trees[x + y * size]);
+                    int score = getScenicScore(x, y);
+                    if (score > highestScore) {
+                        highestScore = score;
                     }
                 }
             }
 
-            return visible;
+            return highestScore;
         }
 
-        boolean isVisible(int x, int y) {
-            // Outer trees
-            if (x == 0 || x == size - 1 || y == 0 || y == size - 1) {
-                return true;
-            }
-
-            // Inner trees
-            return isVisibleHorizontal(x, y) || isVisibleVertical(x, y);
-        }
-
-        boolean isVisibleHorizontal(int x, int y) {
+        int getScenicScore(int x, int y) {
             int referenceHeight = trees[x + y * size].height;
-            boolean visible = true;
+            int[] scenicScoreComponents = new int[] {0, 0, 0, 0};
 
             // from the left
             for (int i = x - 1; i >= 0; i--) {
                 int height = trees[i + y * size].height;
+                scenicScoreComponents[1]++;
                 if (referenceHeight <= height) {
-                    visible = false;
                     break;
                 }
             }
-
-            if (visible) {
-                return true;
-            }
-
-            // Reset it back, now check from right.
-            visible = true;
 
             // from the right
             for (int i = x + 1; i < size; i++) {
                 int height = trees[i + y * size].height;
+                scenicScoreComponents[2]++;
                 if (referenceHeight <= height) {
-                    visible = false;
                     break;
                 }
             }
-
-            return visible;
-        }
-
-        private boolean isVisibleVertical(int x, int y) {
-            int referenceHeight = trees[x + y * size].height;
-            boolean visible = true;
 
             // from the top
             for (int i = y - 1; i >= 0; i--) {
                 int height = trees[x + i * size].height;
+                scenicScoreComponents[0]++;
                 if (referenceHeight <= height) {
-                    visible = false;
                     break;
                 }
             }
-
-            if (visible) {
-                return true;
-            }
-
-            // Reset it back, now check from bottom.
-            visible = true;
 
             // from the bottom
             for (int i = y + 1; i < size; i++) {
                 int height = trees[x + i * size].height;
+                scenicScoreComponents[3]++;
                 if (referenceHeight <= height) {
-                    visible = false;
                     break;
                 }
             }
 
-            return visible;
+            return Arrays.stream(scenicScoreComponents).reduce(1, (acc, value) -> acc * value);
         }
     }
 
@@ -141,10 +112,8 @@ public class Day8 {
         }
 
         Grid grid = new Grid(trees, gridSize);
-        List<Tree> visible = grid.getVisibleTrees();
 
-        System.out.println(visible);
-        System.out.printf("%d trees are visible from outside the grid\n", visible.size());
+        System.out.printf("%d is the highest scenic score possible for any tree\n", grid.getHighestScenicScore());
     }
 
     private void insertTrees(String trees, Tree[] grid, int offset, int gridSize) {

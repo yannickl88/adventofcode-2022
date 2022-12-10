@@ -21,18 +21,22 @@ public class Day10 {
         }
 
         private void cycle(int registerValue) {
-            cycles++;
-
-            if ((cycles + 20) % 40 == 0) {
-                System.out.printf("Cycle %d the registry value at the start is %d, after is %d\n", cycles, this.registerValue, registerValue);
-                signalStrengths.add(this.registerValue * cycles);
+            if (cycles % 40 == 0) {
+                System.out.println();
             }
+            System.out.printf(overlaps(this.registerValue, cycles % 40) ? "#" : ".");
+
+            cycles++;
             this.registerValue = registerValue;
+        }
+
+        private boolean overlaps(int registerValue, int position) {
+            return position >= registerValue - 1 && position <= registerValue + 1;
         }
     }
 
     public Day10() {
-        File input = new File("inputs/day10/test2.txt");
+        File input = new File("inputs/day10/input.txt");
         Scanner instructions;
         try {
             instructions = new Scanner(input);
@@ -52,7 +56,6 @@ public class Day10 {
             }
         }
 
-        System.out.println(cpu.signalStrengths);
-        System.out.println(cpu.signalStrengths.stream().reduce(Integer::sum));
+        System.out.println();
     }
 }

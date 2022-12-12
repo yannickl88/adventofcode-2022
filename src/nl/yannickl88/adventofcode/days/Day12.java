@@ -103,7 +103,7 @@ public class Day12 {
 
         List<List<Position>> gridData = new ArrayList<>();
         Grid grid = new Grid(gridData);
-        Position start = null, end = null;
+        Position end = null;
 
         while (heightMap.hasNext()) {
             String line = heightMap.nextLine();
@@ -115,9 +115,6 @@ public class Day12 {
 
                 row.add(position);
 
-                if (index.equals("S")) {
-                    start = position;
-                }
                 if (index.equals("E")) {
                     end = position;
                 }
@@ -126,10 +123,17 @@ public class Day12 {
             gridData.add(row);
         }
 
-        List<Position> path = getShortestPath(start, end);
+        int best = Integer.MAX_VALUE;
 
-        System.out.printf("fewest steps to destination is %d\n", path.size() - 1);
-        System.out.println(path);
+        for (Position start : grid.all().stream().filter(position -> position.heightAsInt() <= 1).collect(Collectors.toList())) {
+            List<Position> path = getShortestPath(start, end);
+
+            if (!path.isEmpty() && path.size() < best) {
+                best = path.size();
+            }
+        }
+
+        System.out.printf("fewest steps to destination is %d\n", best);
     }
 
     List<Position> getShortestPath(Position from, Position to) {
@@ -161,13 +165,9 @@ public class Day12 {
         List<Position> path = new ArrayList<>();
         Position current = to;
 
-        while (current != null) {
+        while (current != null && previous.containsKey(current)) {
             path.add(0, current);
-            if (current == from) {
-                break;
-            }
-
-            current = previous.getOrDefault(current, from);
+            current = previous.get(current);
         }
 
         return path;

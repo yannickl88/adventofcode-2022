@@ -104,33 +104,37 @@ public class Day13 {
             throw new RuntimeException(e);
         }
 
-        int totalSum = 0;
-        int pair = 1;
+        ArrayList<Segment> packages = new ArrayList<>();
+        Segment divider1 = Segment.parse("[[2]]");
+        Segment divider2 = Segment.parse("[[6]]");
+
+        packages.add(divider1);
+        packages.add(divider2);
 
         while (pairs.hasNext()) {
-            Segment packet1 = Segment.parse(pairs.nextLine());
-            Segment packet2 = Segment.parse(pairs.nextLine());
-
-            System.out.printf("== PAIR %d ==\n", pair);
-            System.out.printf("- Compare %s vs %s\n", packet1, packet2);
-
-            Boolean result = compare(packet1, packet2, 1);
-            if (null == result || result) {
-                System.out.println("--> OK");
-                totalSum += pair;
-            } else {
-                System.out.println("--> NOT");
-            }
-            System.out.println();
+            packages.add(Segment.parse(pairs.nextLine()));
+            packages.add(Segment.parse(pairs.nextLine()));
 
             if (pairs.hasNext()) pairs.nextLine();
-            pair++;
         }
 
-        System.out.printf("The sum of the indices already in the right order is %d\n", totalSum);
+        packages.sort((o1, o2) -> {
+            Boolean result = compare(o1, o2);
+
+            if (result == null) return 0;
+            if (result) return -1;
+            return 1;
+        });
+
+        for (Segment s : packages) {
+            System.out.println(s);
+        }
+
+        System.out.println();
+        System.out.printf("Indexes are %d and %d, decoder key is %d \n", packages.indexOf(divider1) + 1, packages.indexOf(divider2) + 1, (packages.indexOf(divider1) + 1) * (packages.indexOf(divider2) + 1));
     }
 
-    private Boolean compare(Segment packet1, Segment packet2, int depth) {
+    private Boolean compare(Segment packet1, Segment packet2) {
         int cursor = 0;
         while (true) {
             Segment value1 = packet1.get(cursor);
@@ -140,17 +144,13 @@ public class Day13 {
                 return null;
             }
             if (value1 == null) {
-                printPadding(depth);
-                System.out.print("- Left side ran out of items, so inputs are in the right order\n");
                 return true;
             }
             if (value2 == null) {
-                printPadding(depth);
-                System.out.print("- Right side ran out of items, so inputs are not in the right order\n");
                 return false;
             }
 
-            Boolean result = compareSegments(value1, value2, depth);
+            Boolean result = compareSegments(value1, value2);
             if (result != null) {
                 return result;
             }
@@ -158,52 +158,31 @@ public class Day13 {
             cursor++;
         }
     }
-    private Boolean compareSegments(Segment value1, Segment value2, int depth) {
-        printPadding(depth);
-        System.out.printf("- Compare %s vs %s\n", value1, value2);
-
+    private Boolean compareSegments(Segment value1, Segment value2) {
         if (null != value1.value && null != value2.value) {
             if (value1.value < value2.value) {
-                printPadding(depth);
-                System.out.print("  - Left side is smaller, so inputs are in the right order\n");
                 return true;
             } else if (value1.value > value2.value) {
-                printPadding(depth);
-                System.out.print("  - Right side is smaller, so inputs are not in the right order\n");
                 return false;
             }
         } else {
             if (null == value1.value && null == value2.value) {
-                Boolean result = compare(value1, value2, depth+1);
+                Boolean result = compare(value1, value2);
                 if (null != result) {
                     return result;
                 }
             }
 
             if (null != value1.value) {
-                printPadding(depth);
                 value1 = new Segment(value1);
-                System.out.printf("- Mixed types; convert left to %s and retry comparison\n", value1);
-
-                return compareSegments(value1, value2, depth + 1);
+                return compareSegments(value1, value2);
             }
             if (null != value2.value) {
-                printPadding(depth);
                 value2 = new Segment(value2);
-                System.out.printf("- Mixed types; convert right to %s and retry comparison\n", value2);
-
-                return compareSegments(value1, value2, depth + 1);
+                return compareSegments(value1, value2);
             }
         }
 
         return null;
-    }
-
-    private static void printPadding(int depth) {
-        System.out.print("  ");
-        while (depth > 0) {
-            System.out.print("  ");
-            depth--;
-        }
     }
 }

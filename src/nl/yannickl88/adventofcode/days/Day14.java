@@ -3,11 +3,9 @@ package nl.yannickl88.adventofcode.days;
 import nl.yannickl88.adventofcode.AlwaysScanner;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class Day14 {

@@ -3,11 +3,7 @@ package nl.yannickl88.adventofcode.days;
 import nl.yannickl88.adventofcode.AlwaysScanner;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
 
 public class Day8 {
     static class Tree {

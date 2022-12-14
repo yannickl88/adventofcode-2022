@@ -3,9 +3,7 @@ package nl.yannickl88.adventofcode.days;
 import nl.yannickl88.adventofcode.AlwaysScanner;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Day10 {
     static class CPU {

@@ -3,9 +3,9 @@ package nl.yannickl88.adventofcode.days;
 import nl.yannickl88.adventofcode.AlwaysScanner;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Day3 {
     private static final String PRIORITY_ORDER = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";

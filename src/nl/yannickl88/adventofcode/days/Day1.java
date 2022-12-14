@@ -3,9 +3,7 @@ package nl.yannickl88.adventofcode.days;
 import nl.yannickl88.adventofcode.AlwaysScanner;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.PriorityQueue;
-import java.util.Scanner;
 
 public class Day1 {
     private static final int TOTAL = 3;

@@ -1,21 +1,14 @@
 package nl.yannickl88.adventofcode.days;
 
+import nl.yannickl88.adventofcode.AlwaysScanner;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class Day6 {
     private static final int MESSAGE_SIZE = 14;
 
     public Day6() {
-        File input = new File("inputs/day6/input.txt");
-        Scanner stream;
-        try {
-            stream = new Scanner(input);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
+        AlwaysScanner stream = new AlwaysScanner(new File("inputs/day6/input.txt"));
         stream.useDelimiter("");
 
         String window = ""; // padding at the front

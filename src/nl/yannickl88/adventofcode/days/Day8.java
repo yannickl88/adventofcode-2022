@@ -1,5 +1,7 @@
 package nl.yannickl88.adventofcode.days;
 
+import nl.yannickl88.adventofcode.AlwaysScanner;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -91,14 +93,7 @@ public class Day8 {
     }
 
     public Day8() {
-        File input = new File("inputs/day8/input.txt");
-        Scanner droneInfo;
-        try {
-            droneInfo = new Scanner(input);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
+        AlwaysScanner droneInfo = new AlwaysScanner(new File("inputs/day8/input.txt"));
         String row = droneInfo.nextLine();
         int gridSize = row.length();
         Tree[] trees = new Tree[gridSize * gridSize];

@@ -1,5 +1,7 @@
 package nl.yannickl88.adventofcode.days;
 
+import nl.yannickl88.adventofcode.AlwaysScanner;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -59,13 +61,7 @@ public class Day2 {
     }
 
     public Day2() {
-        File input = new File("inputs/day2/input.txt");
-        Scanner rounds;
-        try {
-            rounds = new Scanner(input);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        AlwaysScanner rounds = new AlwaysScanner(new File("inputs/day2/input.txt"));
 
         int round = 1;
         int totalScore = 0;

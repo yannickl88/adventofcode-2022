@@ -1,5 +1,7 @@
 package nl.yannickl88.adventofcode.days;
 
+import nl.yannickl88.adventofcode.AlwaysScanner;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -96,13 +98,7 @@ public class Day13 {
     }
 
     public Day13() {
-        File input = new File("inputs/day13/input.txt");
-        Scanner pairs;
-        try {
-            pairs = new Scanner(input);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        AlwaysScanner pairs = new AlwaysScanner(new File("inputs/day13/input.txt"));
 
         ArrayList<Segment> packages = new ArrayList<>();
         Segment divider1 = Segment.parse("[[2]]");

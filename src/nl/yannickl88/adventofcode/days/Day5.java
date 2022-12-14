@@ -1,22 +1,15 @@
 package nl.yannickl88.adventofcode.days;
 
+import nl.yannickl88.adventofcode.AlwaysScanner;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Day5 {
     public Day5() {
-        File input = new File("inputs/day5/input.txt");
-        Scanner instructions;
-        try {
-            instructions = new Scanner(input);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
+        AlwaysScanner instructions = new AlwaysScanner(new File("inputs/day5/input.txt"));
         ArrayList<ArrayList<String>> crates = new ArrayList<>();
         boolean readingInstructions = false; // true, once the crate configuration is done
         Pattern pattern = Pattern.compile("^move ([0-9]+) from ([0-9]+) to ([0-9]+)$");

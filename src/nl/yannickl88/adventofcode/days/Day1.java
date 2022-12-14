@@ -1,5 +1,7 @@
 package nl.yannickl88.adventofcode.days;
 
+import nl.yannickl88.adventofcode.AlwaysScanner;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.PriorityQueue;
@@ -19,18 +21,11 @@ public class Day1 {
     }
 
     public Day1() {
-        File input = new File("inputs/day1/test.txt");
+        AlwaysScanner elfs = new AlwaysScanner(new File("inputs/day1/input.txt"));
 
         PriorityQueue<Elf> queue = new PriorityQueue<>((o1, o2) -> Integer.compare(o2.calories, o1.calories));
         int currentElf = 1;
         int currentCaloricCount = 0;
-
-        Scanner elfs;
-        try {
-            elfs = new Scanner(input);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
         while (elfs.hasNextLine()) {
             String line = elfs.nextLine();

@@ -1,5 +1,7 @@
 package nl.yannickl88.adventofcode.days;
 
+import nl.yannickl88.adventofcode.AlwaysScanner;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -153,14 +155,7 @@ public class Day9 {
     }
 
     public Day9() {
-        File input = new File("inputs/day9/input.txt");
-        Scanner moves;
-        try {
-            moves = new Scanner(input);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
+        AlwaysScanner moves = new AlwaysScanner(new File("inputs/day9/input.txt"));
         Rope rope = new Rope();
         rope.print();
 

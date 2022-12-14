@@ -1,5 +1,7 @@
 package nl.yannickl88.adventofcode.days;
 
+import nl.yannickl88.adventofcode.AlwaysScanner;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -46,14 +48,7 @@ public class Day4 {
     }
 
     public Day4() {
-        File input = new File("inputs/day4/input.txt");
-        Scanner pairs;
-        try {
-            pairs = new Scanner(input);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
+        AlwaysScanner pairs = new AlwaysScanner(new File("inputs/day4/input.txt"));
         int overlappingSections = 0;
 
         while (pairs.hasNextLine()) {

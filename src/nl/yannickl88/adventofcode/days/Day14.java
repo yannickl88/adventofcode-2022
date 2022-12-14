@@ -1,5 +1,7 @@
 package nl.yannickl88.adventofcode.days;
 
+import nl.yannickl88.adventofcode.AlwaysScanner;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -64,13 +66,7 @@ public class Day14 {
     }
 
     public Day14() {
-        File input = new File("inputs/day14/input.txt");
-        Scanner scans;
-        try {
-            scans = new Scanner(input);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        AlwaysScanner scans = new AlwaysScanner(new File("inputs/day14/input.txt"));
 
         Grid grid = new Grid();
 

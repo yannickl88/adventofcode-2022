@@ -1,5 +1,7 @@
 package nl.yannickl88.adventofcode.days;
 
+import nl.yannickl88.adventofcode.AlwaysScanner;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -9,14 +11,7 @@ public class Day3 {
     private static final String PRIORITY_ORDER = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public Day3() {
-        File input = new File("inputs/day3/input.txt");
-        Scanner backpacks;
-        try {
-            backpacks = new Scanner(input);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
+        AlwaysScanner backpacks = new AlwaysScanner(new File("inputs/day3/input.txt"));
         int totalScore = 0;
 
         while (backpacks.hasNextLine()) {

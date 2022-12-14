@@ -111,7 +111,9 @@ public class Day14 {
         }
 
         int sandAdded = 0;
-        while (addSand(grid)) {
+        int floor = grid.maxHeight;
+        while (grid.get(500, 0) != CellType.SAND) {
+            addSand(grid, floor);
             sandAdded++;
         }
 
@@ -120,12 +122,13 @@ public class Day14 {
         System.out.println(sandAdded);
     }
 
-    private boolean addSand(Grid grid) {
+    private boolean addSand(Grid grid, int floor) {
         Point sand = new Point(500, 0);
 
         while (true) {
-            if (sand.y > grid.maxHeight) {
-                return false;
+            if (sand.y > floor) {
+                grid.put(sand.x, sand.y, CellType.SAND);
+                return true;
             }
 
             if (grid.get(sand.x, sand.y + 1) == CellType.AIR) { // Can I move down?

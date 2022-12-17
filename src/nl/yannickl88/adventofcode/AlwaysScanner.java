@@ -2,6 +2,8 @@ package nl.yannickl88.adventofcode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -38,5 +40,15 @@ public class AlwaysScanner {
 
     public boolean hasNextLine() {
         return scanner.hasNextLine();
+    }
+
+    public List<String> lines() {
+        ArrayList<String> lines = new ArrayList<>();
+
+        while (scanner.hasNextLine()) {
+            lines.add(scanner.nextLine());
+        }
+
+        return lines;
     }
 }

@@ -1,21 +1,15 @@
 package nl.yannickl88.adventofcode.days;
 
 import nl.yannickl88.adventofcode.AlwaysScanner;
-import nl.yannickl88.adventofcode.util.Grid;
 import nl.yannickl88.adventofcode.util.GridUtils;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Day15 {
-    static enum Item {
-        BEACON, SENSOR, NOTHING
-    }
-
     static class Sensor {
         final int x, y, range;
 
@@ -23,10 +17,6 @@ public class Day15 {
             this.x = x;
             this.y = y;
             this.range = range;
-        }
-
-        public boolean inRange(int x, int y) {
-            return Math.abs(this.x - x) + Math.abs(this.y - y) <= range;
         }
     }
 
@@ -77,8 +67,6 @@ public class Day15 {
                 inInRangeOf(x, y, sensors);
             }
         }
-
-        System.out.println("HEY");
     }
 
     private void inInRangeOf(int x, int y, ArrayList<Sensor> sensors) {
